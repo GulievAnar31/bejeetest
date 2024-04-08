@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const Task = require('./task');
-const authMiddleware = require('./authMiddleware');
+const Task = require('./models/task');
 
-router.post('/', authMiddleware, async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const { title, description } = req.body;
     const newTask = await Task.create({ title, description });
@@ -14,7 +13,7 @@ router.post('/', authMiddleware, async (req, res) => {
   }
 });
 
-router.get('/', authMiddleware, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
@@ -28,7 +27,7 @@ router.get('/', authMiddleware, async (req, res) => {
 });
 
 // Маршрут для удаления задачи
-router.delete('/:id', authMiddleware, async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;
     await Task.findByIdAndDelete(id);
