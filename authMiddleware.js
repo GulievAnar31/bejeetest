@@ -9,7 +9,7 @@ module.exports = async function authMiddleware(req, res, next) {
   }
 
   try {
-    const decoded = jwt.verify(token, 'your_secret_key');
+    const decoded = jwt.verify(token, '+');
     const user = await User.findById(decoded.userId);
     if (!user) {
       return res.status(401).json({ error: 'Unauthorized: Invalid token' });
