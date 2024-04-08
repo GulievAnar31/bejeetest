@@ -1,7 +1,7 @@
-// server.js
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const cors = require('cors'); // Import the cors middleware
 const userRoutes = require('./user');
 const authRoutes = require('./auth');
 const taskRoutes = require('./task');
@@ -18,10 +18,11 @@ mongoose.connect('mongodb+srv://mongo:mongo@cluster0.1cnt31s.mongodb.net/?retryW
 
 app.use(bodyParser.json());
 
+// Enable CORS for all routes
+app.use(cors());
+
 app.use('/users', userRoutes);
-
 app.use('/auth', authRoutes);
-
 app.use('/tasks', taskRoutes);
 
 app.use((err, req, res, next) => {

@@ -49,12 +49,12 @@ router.delete('/:id', async (req, res) => {
 router.post('/register', async (req, res) => {
     try {
       const { name, email, password } = req.body;
-      // Проверяем, существует ли уже пользователь с таким email
+
       const existingUser = await User.findOne({ email });
       if (existingUser) {
         return res.status(400).json({ error: 'User already exists' });
       }
-      // Создаем нового пользователя
+
       const newUser = await User.create({ name, email, password });
       res.status(201).json(newUser);
     } catch (err) {
